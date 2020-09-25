@@ -34,9 +34,9 @@ class Brand
      */
     private $price_reserved;
 
-    function __construct($id, $brandData)
+    function __construct($brandData)
     {
-        $this->id = $id;
+        $this->id = $brandData['id'];
         $this->name = $brandData['name'];
 
         $this->quantity = key_exists('quantity', $brandData) ? $brandData['quantity'] : 0;
@@ -45,6 +45,10 @@ class Brand
         $this->price_reserved = key_exists('price_reserved', $brandData) ? $brandData['price_reserved'] : 0;
     }
 
+    public function get_id()
+    {
+        return $this->id;
+    }
     public function get_name()
     {
         return $this->name;

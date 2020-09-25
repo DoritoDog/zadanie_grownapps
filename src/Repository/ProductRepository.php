@@ -19,9 +19,9 @@ SELECT p.*, b.name AS brand FROM products p
 JOIN brands b on p.brand_id = b.id
 SQL;
 
+        $parameters = [];
         if ('' !== $name || '' !== $brandId) {
             $where = [];
-            $parameters = [];
             if ('' !== $name) {
                 $where[] = "p.name LIKE :name";
                 $parameters[':name'] = "%$name%";

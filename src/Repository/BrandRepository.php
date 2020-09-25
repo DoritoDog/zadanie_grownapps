@@ -47,10 +47,10 @@ SQL;
     function rowsToModels($rows)
     {
         $models = array();
-        for ($i = 0; $i < count($rows); $i++) {
+        foreach ($rows as $modelData) {
             // Possible improvement: create a Factory class for brands and products to avoid repeating this code in ProductRepository
             // (not necessary yet because it is only a small function).
-            $model = new Brand($i, $rows[$i]);
+            $model = new Brand($modelData);
             array_push($models, $model);
         }
         return $models;

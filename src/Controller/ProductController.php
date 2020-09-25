@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Log;
 use App\Model\Brand;
-use App\Model\Product;
+use App\Repository\ProductRepository;
 use App\PdoDB;
 
 class ProductController extends AbstractController
@@ -28,14 +28,9 @@ class ProductController extends AbstractController
         $brandModel = new Brand($db);
         $brands = $brandModel->load();
 
-        $productModel = new Product($db);
-        $products = $productModel->load($name, $brand, $order, 'ASC', $limit);
-
-        foreach ($products as $key => $product) {
-            $products[$key]['sum_price'] = $product['price'] * $product['quantity'];
-            $products[$key]['sum_reserved_price'] = $product['price'] * $product['reserved'];
-        }
-
+        $productRepository = new ProductRepository($db);
+        $products = $productRepository->load($name, $brand, $order, 'ASC', $limit);
+        
         return [
             'title' => 'Products',
             'products' => $products,

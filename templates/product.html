@@ -51,12 +51,12 @@
     <tbody>
     {% for product in products %}
     <tr>
-        <th scope="row">{{ product['id'] }}</th>
-        <td>{{ product['name'] }}</td>
-        <td>{{ product['brand'] }}</td>
-        <td>{{ product['price'] }}</td>
-        <td>{{ product['quantity'] }} / {{ product['reserved'] }}</td>
-        <td>{{ product['sum_price'] }} / {{ product['sum_reserved_price'] }}</td>
+        <th scope="row">{{ product.id }}</th>
+        <td>{{ product.get_name() }}</td>
+        <td>{{ product.get_brand() }}</td>
+        <td>{{ product.get_price() }}</td>
+        <td>{{ product.get_quantity() }} / {{ product.get_reserved() }}</td>
+        <td>{{ product.get_sum_price() }} / {{ product.get_sum_reserved_price() }}</td>
     </tr>
     {% endfor %}
     </tbody>

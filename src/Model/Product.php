@@ -2,37 +2,91 @@
 
 namespace App\Model;
 
-class Product extends Model
+class Product
 {
-    function __construct($db)
+    /*
+     * @var string
+     */
+    private $name;
+
+    /*
+     * @var string
+     */
+    private $color;
+
+    /*
+     * @var integer
+     */
+    private $price;
+
+    /*
+     * @var Brand
+     */
+    private $brand;
+
+    /*
+     * @var integer
+     */
+    private $quantity;
+
+    /*
+     * @var boolean
+     */
+    private $reserved;
+
+    /*
+     * @var integer
+     */
+    private $sum_price;
+
+    /*
+     * @var integer
+     */
+    private $sum_reserved_price;
+
+    function __construct($productData)
     {
-        parent::__construct($db);
+        $this->name = $productData['name'];
+        $this->color = $productData['color'];
+        $this->price = $productData['price'];
+        $this->brand = $productData['brand'];
+        $this->quantity = $productData['quantity'];
+        $this->reserved = $productData['reserved'];
+
+        $this->reserved_price = $this->price * $this->quantity;
+        $this->sum_reserved_price = $this->price * $this->reserved;
     }
 
-    public function load($name = '', $brandId = '', $order = 'id', $direction = 'ASC', $limit = 10)
+    public function get_name()
     {
-        $sql = <<<SQL
-SELECT p.*, b.name AS brand FROM products p
-JOIN brands b on p.brand_id = b.id
-SQL;
-
-        if ('' !== $name || '' !== $brandId) {
-            $where = [];
-            if ('' !== $name) {
-                $where[] = "p.name LIKE '%$name%'";
-            }
-
-            if ('' !== $brandId) {
-                $where[] = "b.id = $brandId";
-            }
-
-            $sql .= " WHERE " . implode(" AND ", $where);
-        }
-
-
-
-        $sql = $this->addCommonParts($sql, $order, $direction, $limit);
-
-        return $this->fetch($sql);
+        return $this->name;
+    }
+    public function get_color()
+    {
+        return $this->color;
+    }
+    public function get_price()
+    {
+        return $this->price;
+    }
+    public function get_brand()
+    {
+        return $this->brand;
+    }
+    public function get_quantity()
+    {
+        return $this->quantity;
+    }
+    public function get_reserved()
+    {
+        return $this->reserved;
+    }
+    public function get_reserved_price()
+    {
+        return $this->reserved_price;
+    }
+    public function get_sum_reserved_price()
+    {
+        return $this->sum_reserved_price;
     }
 }

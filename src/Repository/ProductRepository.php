@@ -38,7 +38,7 @@ SQL;
 
         $sql = $this->addCommonParts($sql, $order, $direction, $limit);
         // Check if there are parameters and if so, use a prepared statement.
-        $products = (is_countable($parameters) && array_count_values($parameters) > 0) ? $this->fetch_prepared($sql, $parameters) : $this->fetch($sql);
+        $products = (!is_null($parameters) && array_count_values($parameters) > 0) ? $this->fetch_prepared($sql, $parameters) : $this->fetch($sql);
 
         $productModels = array();
         foreach ($products as $productData) {

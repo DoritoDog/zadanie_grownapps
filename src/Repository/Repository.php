@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Model;
+namespace App\Repository;
 
 use App\PdoDB;
 
-abstract class Model
+abstract class Repository
 {
     /**
      * @var iDB

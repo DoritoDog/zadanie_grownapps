@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Brand;
+use App\Repository\BrandRepository;
 use App\PdoDB;
 
 class StatsController extends AbstractController
@@ -15,11 +15,11 @@ class StatsController extends AbstractController
     protected function getData()
     {
         $db = new PdoDB();
-        $brandModel = new Brand($db);
+        $brandRepository = new BrandRepository($db);
 
         return [
             'title' => 'Stats',
-            'brands' => $brandModel->getStats(),
+            'brands' => $brandRepository->getStats(),
         ];
     }
 }

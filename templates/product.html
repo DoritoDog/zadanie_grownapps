@@ -12,7 +12,7 @@
             <select name="brand" id="brand" class="form-control">
                 <option></option>
                 {% for brand in brands %}
-                    <option value="{{ brand['id'] }}">{{ brand['name'] }}</option>
+                    <option value="{{ brand.get_id() }}">{{ brand.get_name() }}</option>
                 {% endfor %}
             </select>
         </div>

@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Model\Model;
+use App\Repository\Repository;
 use App\Model\Product;
 
-class ProductRepository extends Model
+class ProductRepository extends Repository
 {
     function __construct($db)
     {

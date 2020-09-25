@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Log;
-use App\Model\Brand;
+use App\Repository\BrandRepository;
 use App\Repository\ProductRepository;
 use App\PdoDB;
 
@@ -25,8 +25,8 @@ class ProductController extends AbstractController
 
         $db = new PdoDB();
 
-        $brandModel = new Brand($db);
-        $brands = $brandModel->load();
+        $brandRepository = new BrandRepository($db);
+        $brands = $brandRepository->load();
 
         $productRepository = new ProductRepository($db);
         $products = $productRepository->load($name, $brand, $order, 'ASC', $limit);

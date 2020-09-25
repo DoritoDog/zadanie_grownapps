@@ -2,39 +2,67 @@
 
 namespace App\Model;
 
-class Brand extends Model
+class Brand
 {
-    function __construct($db)
+    /*
+     * @var integer
+     */
+    private $id;
+
+    /*
+     * @var string
+     */
+    private $name;
+
+    /*
+     * @var integer
+     */
+    private $quantity;
+
+    /*
+     * @var boolean
+     */
+    private $reserved;
+    
+    /*
+     * @var integer
+     */
+    private $price_quantity;
+
+    /*
+     * @var integer
+     */
+    private $price_reserved;
+
+    function __construct($id, $brandData)
     {
-        parent::__construct($db);
+        $this->id = $id;
+        $this->name = $brandData['name'];
+
+        $this->quantity = key_exists('quantity', $brandData) ? $brandData['quantity'] : 0;
+        $this->reserved = key_exists('reserved', $brandData) ? $brandData['reserved'] : FALSE;
+        $this->price_quantity = key_exists('price_quantity', $brandData) ? $brandData['price_quantity'] : 0;
+        $this->price_reserved = key_exists('price_reserved', $brandData) ? $brandData['price_reserved'] : 0;
     }
 
-    public function load()
+    public function get_name()
     {
-        $sql = <<<SQL
-SELECT 
-    b.id, 
-    b.name 
-FROM brands b
-SQL;
-        return $this->fetch($sql);
+        return $this->name;
     }
-
-    public function getStats()
+    public function get_quantity()
     {
-        $sql = <<<SQL
-SELECT 
-    b.name, 
-    SUM(p.quantity) AS quantity, 
-    SUM(p.reserved) AS reserved, 
-    SUM(p.quantity * p.price) AS price_quantity, 
-    SUM(p.reserved * p.price) AS price_reserved
-FROM brands b
-LEFT JOIN products p on b.id = p.brand_id
-GROUP BY b.id
-ORDER BY b.name
-SQL;
-
-        return $this->fetch($sql);
+        return $this->quantity;
+    }
+    public function get_reserved()
+    {
+        return $this->reserved;
+    }
+    public function get_price_quantity()
+    {
+        return $this->price_quantity;
+    }
+    public function get_price_reserved()
+    {
+        return $this->price_reserved;
     }
 }

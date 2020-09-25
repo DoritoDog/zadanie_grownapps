@@ -33,4 +33,12 @@ final class PdoDB implements iDB
     {
         return $this->pdo->query($statement)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function queryAndFetchPrepared($statement, $parameters)
+    {
+        $stmt = $this->pdo->prepare($statement);
+        $stmt->execute($parameters);
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $results;
+    }
 }

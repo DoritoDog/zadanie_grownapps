@@ -31,4 +31,9 @@ abstract class Repository
     {
         return $this->db->queryAndFetch($sql);
     }
+
+    protected function fetch_prepared($sql, $parameters)
+    {
+        return $this->db->queryAndFetchPrepared($sql, $parameters);
+    }
 }

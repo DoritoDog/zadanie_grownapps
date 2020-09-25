@@ -21,21 +21,24 @@ SQL;
 
         if ('' !== $name || '' !== $brandId) {
             $where = [];
+            $parameters = [];
             if ('' !== $name) {
-                $where[] = "p.name LIKE '%$name%'";
+                $where[] = "p.name LIKE :name";
+                $parameters[':name'] = "%$name%";
             }
 
             if ('' !== $brandId) {
-                $where[] = "b.id = $brandId";
+                $where[] = "b.id = :brandId";
+                $parameters[':brandId'] = $brandId;
             }
 
             $sql .= " WHERE " . implode(" AND ", $where);
         }
 
 
-
         $sql = $this->addCommonParts($sql, $order, $direction, $limit);
-        $products = $this->fetch($sql);
+        // Check if there are parameters and if so, use a prepared statement.
+        $products = (is_countable($parameters) && array_count_values($parameters) > 0) ? $this->fetch_prepared($sql, $parameters) : $this->fetch($sql);
 
         $productModels = array();
         foreach ($products as $productData) {

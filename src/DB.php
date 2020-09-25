@@ -6,27 +6,25 @@ use \PDO;
 
 final class DB
 {
-    private static $instance;
+    /*
+     * readonly @var PDO
+     */
+    private $pdo;
 
-    private function __construct()
+    function __construct()
     {
+        $this->pdo = new PDO(
+            "mysql:host=" . _DB_SERVER_ . ';port=3306;dbname=' . _DB_NAME_,
+            _DB_USER_,
+            _DB_PASSWD_
+        );
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT);
+        $this->pdo->query('SET NAMES utf8');
+        $this->pdo->query('SET CHARACTER SET utf8');
     }
 
-    public static function getInstance()
+    public function get_pdo()
     {
-        if (null === self::$instance) {
-            $pdo = new PDO(
-                "mysql:host=" . _DB_SERVER_ . ';port=3306;dbname=' . _DB_NAME_,
-                _DB_USER_,
-                _DB_PASSWD_
-            );
-            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT);
-            $pdo->query('SET NAMES utf8');
-            $pdo->query('SET CHARACTER SET utf8');
-
-            self::$instance = $pdo;
-        }
-
-        return self::$instance;
+        return $this->pdo;
     }
 }

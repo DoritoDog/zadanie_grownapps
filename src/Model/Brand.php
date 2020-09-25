@@ -4,6 +4,11 @@ namespace App\Model;
 
 class Brand extends Model
 {
+    function __construct($db)
+    {
+        parent::__construct($db);
+    }
+
     public function load()
     {
         $sql = <<<SQL

@@ -11,6 +11,11 @@ abstract class Model
      */
     private $db;
 
+    function __construct($db)
+    {
+        $this->db = $db;
+    }
+
     protected function addCommonParts($sql, $order = 'id', $direction = 'ASC', $limit = 10)
     {
         if ("" !== $order) {
@@ -24,18 +29,7 @@ abstract class Model
 
     protected function fetch($sql)
     {
-        $stmt = $this->getDb()
-            ->query($sql);
-
+        $stmt = $this->db->get_pdo()->query($sql);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    protected function getDb()
-    {
-        if (null === $this->db) {
-            $this->db = DB::getInstance();
-        }
-
-        return $this->db;
     }
 }

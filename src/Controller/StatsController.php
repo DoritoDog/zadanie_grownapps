@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Brand;
+use App\DB;
 
 class StatsController extends AbstractController
 {
@@ -13,7 +14,8 @@ class StatsController extends AbstractController
 
     protected function getData()
     {
-        $brandModel = new Brand();
+        $db = new DB();
+        $brandModel = new Brand($db);
 
         return [
             'title' => 'Stats',

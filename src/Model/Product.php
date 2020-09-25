@@ -4,6 +4,11 @@ namespace App\Model;
 
 class Product extends Model
 {
+    function __construct($db)
+    {
+        parent::__construct($db);
+    }
+
     public function load($name = '', $brandId = '', $order = 'id', $direction = 'ASC', $limit = 10)
     {
         $sql = <<<SQL

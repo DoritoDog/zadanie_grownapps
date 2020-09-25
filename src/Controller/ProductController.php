@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Log;
 use App\Model\Brand;
 use App\Model\Product;
+use App\DB;
 
 class ProductController extends AbstractController
 {
@@ -22,10 +23,12 @@ class ProductController extends AbstractController
 
         Log::info(sprintf('Rendering products action.'), $_GET);
 
-        $brandModel = new Brand();
+        $db = new DB();
+
+        $brandModel = new Brand($db);
         $brands = $brandModel->load();
 
-        $productModel = new Product();
+        $productModel = new Product($db);
         $products = $productModel->load($name, $brand, $order, 'ASC', $limit);
 
         foreach ($products as $key => $product) {

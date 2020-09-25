@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Repository\Repository;
 use App\Model\Product;
+use App\QueryBuilder;
 
 class ProductRepository extends Repository
 {
@@ -35,11 +36,15 @@ SQL;
             $sql .= " WHERE " . implode(" AND ", $where);
         }
 
+        // Order and limit the data.
+        $queryBuilder = new QueryBuilder($sql);
+        $queryBuilder->order($order, $direction, $parameters);
+        $queryBuilder->limit($limit);
+        $sql = $queryBuilder->get_sql();
 
-        $sql = $this->addCommonParts($sql, $order, $direction, $limit);
-        // Check if there are parameters and if so, use a prepared statement.
-        $products = (!is_null($parameters) && array_count_values($parameters) > 0) ? $this->fetch_prepared($sql, $parameters) : $this->fetch($sql);
+        $products = $this->fetch_prepared($sql, $parameters);
 
+        // Create Product classes from the database rows.
         $productModels = array();
         foreach ($products as $productData) {
             $productModel = new Product($productData);

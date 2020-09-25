@@ -2,12 +2,12 @@
 
 namespace App\Model;
 
-use App\DB;
+use App\PdoDB;
 
 abstract class Model
 {
     /**
-     * @var DB
+     * @var iDB
      */
     private $db;
 
@@ -29,7 +29,6 @@ abstract class Model
 
     protected function fetch($sql)
     {
-        $stmt = $this->db->get_pdo()->query($sql);
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->db->queryAndFetch($sql);
     }
 }

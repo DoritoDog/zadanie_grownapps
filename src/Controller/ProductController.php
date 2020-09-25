@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Log;
 use App\Model\Brand;
 use App\Model\Product;
-use App\DB;
+use App\PdoDB;
 
 class ProductController extends AbstractController
 {
@@ -23,7 +23,7 @@ class ProductController extends AbstractController
 
         Log::info(sprintf('Rendering products action.'), $_GET);
 
-        $db = new DB();
+        $db = new PdoDB();
 
         $brandModel = new Brand($db);
         $brands = $brandModel->load();

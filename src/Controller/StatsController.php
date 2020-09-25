@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Brand;
-use App\DB;
+use App\PdoDB;
 
 class StatsController extends AbstractController
 {
@@ -14,7 +14,7 @@ class StatsController extends AbstractController
 
     protected function getData()
     {
-        $db = new DB();
+        $db = new PdoDB();
         $brandModel = new Brand($db);
 
         return [

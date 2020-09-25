@@ -3,8 +3,9 @@
 namespace App;
 
 use \PDO;
+use App\iDB;
 
-final class DB
+final class PdoDB implements iDB
 {
     /*
      * readonly @var PDO
@@ -26,5 +27,10 @@ final class DB
     public function get_pdo()
     {
         return $this->pdo;
+    }
+
+    public function queryAndFetch($statement)
+    {
+        return $this->pdo->query($statement)->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
